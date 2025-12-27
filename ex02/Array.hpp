@@ -39,12 +39,12 @@ Array<T>::Array(unsigned int n): _data(nullptr), _size(n) {
 }
 
 template <typename T>
-Array<T>::Array(const Array& other): _data(nullptr), size(other._size) {
+Array<T>::Array(const Array& other): _data(nullptr), _size(other._size) {
     if (_size == 0) {
         return ;
     }
     _data = new T[_size];
-    for (size_t i; i < _size; ++i) {
+    for (size_t i = 0; i < _size; ++i) {
         _data[i] = other._data[i];
     }
 }
@@ -63,6 +63,26 @@ Array<T>& Array<T>::operator=(const Array& other)
         _data[i] = other._data[i];
 
     return *this;
+}
+
+template <typename T>
+T& Array<T>::operator[](size_t i) {
+    if (i >= _size)
+        throw std::exception();
+    return _data[i];
+}
+
+template <typename T>
+size_t Array<T>::size() const
+{
+    return _size;
+}
+
+template <typename T>
+const T& Array<T>::operator[](size_t i) const {
+    if (i >= _size)
+        throw std::exception();
+    return _data[i];
 }
 
 #endif
