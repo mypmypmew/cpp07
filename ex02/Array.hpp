@@ -21,4 +21,48 @@ template<typename T> class Array {
         const T& operator[](size_t i) const;
 };
 
+template <typename T>
+Array<T>::Array() : _data(nullptr), _size(0) {    
+}
+
+template <typename T>
+Array<T>::~Array() {
+    delete[] _data;
+}
+
+template <typename T>
+Array<T>::Array(unsigned int n): _data(nullptr), _size(n) {
+    if (n == 0) {
+        return ;
+    }
+    _data = new T[n];
+}
+
+template <typename T>
+Array<T>::Array(const Array& other): _data(nullptr), size(other._size) {
+    if (_size == 0) {
+        return ;
+    }
+    _data = new T[_size];
+    for (size_t i; i < _size; ++i) {
+        _data[i] = other._data[i];
+    }
+}
+
+template <typename T>
+Array<T>& Array<T>::operator=(const Array& other)
+{
+    if (this == &other)
+        return *this;
+
+    delete[] _data;
+    _size = other._size;
+    _data = (_size == 0) ? nullptr : new T[_size];
+
+    for (size_t i = 0; i < _size; ++i)
+        _data[i] = other._data[i];
+
+    return *this;
+}
+
 #endif
